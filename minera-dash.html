@@ -1,0 +1,1287 @@
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MINERTECH | Dashboard QA</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 25px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f5f7;
+    color: #252c35;
+}
+
+.sidebar {
+    width: 255px;
+    height: 100vh;
+    background: #20282b;
+    color: white;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 8px 35px;
+}
+
+.logo-icon {
+    width: 48px;
+    height: 48px;
+    background: #f5a623;
+    color: #20282b;
+    display: grid;
+    place-items: center;
+    font-size: 27px;
+    border-radius: 10px;
+}
+
+.logo h2 {
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.logo span {
+    color: #f5a623;
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+.menu-titulo {
+    color: #8e9b9f;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 10px;
+    margin-bottom: 12px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar nav a {
+    color: #c4ccce;
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.ativo {
+    background: #364348;
+    color: #f5a623;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    border-top: 1px solid #3a4549;
+    padding: 20px 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-indicador {
+    width: 10px;
+    height: 10px;
+    background: #35c77a;
+    border-radius: 50%;
+}
+
+.sidebar-footer strong,
+.sidebar-footer small {
+    display: block;
+    font-size: 12px;
+}
+
+.sidebar-footer small {
+    color: #9ca8ac;
+    margin-top: 5px;
+}
+
+.conteudo {
+    margin-left: 255px;
+    padding: 30px 38px;
+    max-width: 1800px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.topbar h1 {
+    font-size: 25px;
+    margin-bottom: 8px;
+}
+
+.topbar p {
+    color: #84909a;
+    font-size: 13px;
+}
+
+.topbar-direita {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.data-atual {
+    color: #75808a;
+    font-size: 12px;
+}
+
+.btn-relatorio {
+    background: #e9a126;
+    color: #20282b;
+    border: none;
+    padding: 13px 18px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-relatorio:hover {
+    background: #cf8610;
+}
+
+.boas-vindas {
+    background: linear-gradient(120deg, #20282b, #38474b);
+    border-radius: 14px;
+    padding: 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.tag {
+    color: #e9a126;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: bold;
+}
+
+.boas-vindas h2 {
+    font-size: 27px;
+    margin: 13px 0;
+}
+
+.boas-vindas p {
+    color: #c6cecf;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.ilustracao {
+    font-size: 75px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.card,
+.painel {
+    background: white;
+    padding: 22px;
+    border-radius: 11px;
+    border: 1px solid #e9ecef;
+}
+
+.card-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #84909a;
+    font-size: 12px;
+    gap: 8px;
+}
+
+.card-icone {
+    width: 38px;
+    height: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    font-size: 19px;
+}
+
+.amarelo {
+    background: #fff3d8;
+    color: #d7951e;
+}
+
+.verde {
+    background: #e0f5e9;
+    color: #23965b;
+}
+
+.vermelho {
+    background: #ffe7e7;
+    color: #d94b4b;
+}
+
+.azul {
+    background: #e3edff;
+    color: #4678ce;
+}
+
+.card h2 {
+    font-size: 31px;
+    margin: 15px 0 7px;
+}
+
+.card small {
+    color: #929ca4;
+    font-size: 11px;
+}
+
+.grid-dashboard {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 20px;
+}
+
+.painel-titulo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.painel-titulo h3 {
+    font-size: 15px;
+}
+
+.painel-titulo p {
+    color: #9aa2aa;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.badge {
+    background: #fff3d8;
+    color: #bd7c10;
+    font-size: 10px;
+    padding: 8px 12px;
+    border-radius: 20px;
+}
+
+.progresso-info {
+    display: flex;
+    flex-direction: column;
+    margin: 35px 0 15px;
+}
+
+.progresso-info strong {
+    font-size: 36px;
+    color: #20282b;
+}
+
+.progresso-info span {
+    color: #9aa2aa;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.barra {
+    width: 100%;
+    height: 12px;
+    background: #edf0f2;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.barra div {
+    height: 100%;
+    width: 0;
+    background: #e9a126;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.legenda {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.legenda span {
+    color: #7e8992;
+    font-size: 11px;
+}
+
+.bolinha {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.verde-bg { background: #23965b; }
+.vermelho-bg { background: #d94b4b; }
+.cinza-bg { background: #c4cbd0; }
+
+.grafico {
+    max-width: 240px;
+    height: 210px;
+    margin: 15px auto 0;
+}
+
+.secao {
+    padding-top: 55px;
+}
+
+.titulo-secao {
+    margin-bottom: 25px;
+}
+
+.titulo-secao h2 {
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+.titulo-secao p {
+    color: #89939b;
+    font-size: 13px;
+}
+
+.projeto-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.projeto-card {
+    background: white;
+    padding: 20px;
+    border-radius: 9px;
+    border: 1px solid #e9ecef;
+}
+
+.projeto-card span,
+.projeto-card strong {
+    display: block;
+}
+
+.projeto-card span {
+    color: #89939b;
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.projeto-card strong {
+    font-size: 14px;
+}
+
+.objetivo {
+    margin-top: 20px;
+}
+
+.objetivo h3 {
+    margin-bottom: 12px;
+}
+
+.objetivo p {
+    color: #7d8790;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+.escopo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.escopo-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    border-left: 4px solid #249b62;
+}
+
+.escopo-card.fora {
+    border-left-color: #d94b4b;
+}
+
+.escopo-card h3 {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.escopo-card ul {
+    padding-left: 20px;
+    color: #77828b;
+    font-size: 12px;
+    line-height: 2.2;
+}
+
+.filtros {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filtros input,
+.filtros select {
+    padding: 13px;
+    border: 1px solid #dce1e5;
+    border-radius: 7px;
+    outline: none;
+    background: white;
+}
+
+.filtros input {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filtros input:focus,
+.filtros select:focus {
+    border-color: #e9a126;
+}
+
+.tabela-container {
+    background: white;
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 650px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #edf0f2;
+    font-size: 12px;
+}
+
+th {
+    background: #f8f9fa;
+    color: #68747d;
+    font-size: 11px;
+}
+
+td {
+    color: #58636c;
+}
+
+.status {
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.status.aprovado {
+    background: #e0f5e9;
+    color: #23965b;
+}
+
+.status.reprovado {
+    background: #ffe7e7;
+    color: #d94b4b;
+}
+
+.status.pendente {
+    background: #fff3d8;
+    color: #bd7c10;
+}
+
+select.status-select {
+    padding: 7px;
+    border: 1px solid #dce1e5;
+    border-radius: 6px;
+    background: white;
+    font-size: 11px;
+}
+
+.ambiente-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.ambiente-item {
+    background: white;
+    padding: 20px;
+    border-radius: 9px;
+    border: 1px solid #e9ecef;
+}
+
+.ambiente-item span {
+    color: #89939b;
+    font-size: 11px;
+    display: block;
+    margin-bottom: 9px;
+}
+
+.ambiente-item strong {
+    font-size: 14px;
+}
+
+.conclusao {
+    background: #20282b;
+    color: white;
+    padding: 30px;
+    border-radius: 12px;
+    line-height: 1.8;
+}
+
+.conclusao p {
+    color: #c6cecf;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.cards-funcionarios {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+.sem-dados {
+    text-align: center;
+    padding: 25px;
+    color: #89939b;
+}
+
+.rodape {
+    margin-top: 50px;
+    padding: 25px 0;
+    text-align: center;
+    color: #89939b;
+    font-size: 11px;
+    border-top: 1px solid #e1e5e8;
+}
+
+@media (max-width: 1100px) {
+    .cards,
+    .cards-funcionarios {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .projeto-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 750px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .sidebar-footer {
+        margin-top: 20px;
+    }
+
+    .conteudo {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .boas-vindas {
+        padding: 25px;
+    }
+
+    .ilustracao {
+        display: none;
+    }
+
+    .cards,
+    .cards-funcionarios,
+    .projeto-grid,
+    .escopo-grid,
+    .ambiente-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+    <div class="logo">
+        <div class="logo-icon">⛏</div>
+        <div>
+            <h2>MINERTECH</h2>
+            <span>GESTÃO E QUALIDADE</span>
+        </div>
+    </div>
+
+    <div class="menu-titulo">MENU PRINCIPAL</div>
+
+    <nav>
+        <a href="#inicio" class="ativo">▦ Dashboard</a>
+        <a href="#projeto">▤ Projeto</a>
+        <a href="#testes">✓ Plano de testes</a>
+        <a href="#resultados">▥ Resultados QA</a>
+        <a href="#funcionarios">♙ Funcionários</a>
+        <a href="#ambiente">⚙ Ambiente</a>
+        <a href="#conclusao">☑ Conclusão</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="status-indicador"></div>
+        <div>
+            <strong>Sistema ativo</strong>
+            <small>MINERTECH QA</small>
+        </div>
+    </div>
+</aside>
+
+<main class="conteudo">
+
+    <header class="topbar" id="inicio">
+        <div>
+            <h1>Dashboard de Qualidade</h1>
+            <p>Acompanhamento dos testes e controle de qualidade do sistema.</p>
+        </div>
+
+        <div class="topbar-direita">
+            <span class="data-atual" id="dataAtual"></span>
+            <button class="btn-relatorio" onclick="window.print()">Imprimir relatório</button>
+        </div>
+    </header>
+
+    <section class="boas-vindas">
+        <div>
+            <span class="tag">MINERTECH • QUALITY ASSURANCE</span>
+            <h2>Painel de controle QA</h2>
+            <p>Monitore os resultados dos testes, identifique falhas<br>
+            e acompanhe os dados dos funcionários cadastrados.</p>
+        </div>
+        <div class="ilustracao">⛏️</div>
+    </section>
+
+    <section class="cards">
+        <div class="card">
+            <div class="card-topo">
+                Total de testes
+                <div class="card-icone amarelo">▤</div>
+            </div>
+            <h2 id="totalTestes">8</h2>
+            <small>Casos de teste cadastrados</small>
+        </div>
+
+        <div class="card">
+            <div class="card-topo">
+                Testes aprovados
+                <div class="card-icone verde">✓</div>
+            </div>
+            <h2 id="totalAcertos">0</h2>
+            <small>Testes com sucesso</small>
+        </div>
+
+        <div class="card">
+            <div class="card-topo">
+                Testes reprovados
+                <div class="card-icone vermelho">✕</div>
+            </div>
+            <h2 id="totalErros">0</h2>
+            <small>Testes que apresentaram falhas</small>
+        </div>
+
+        <div class="card">
+            <div class="card-topo">
+                Pendentes
+                <div class="card-icone azul">◷</div>
+            </div>
+            <h2 id="totalPendentes">8</h2>
+            <small>Aguardando execução</small>
+        </div>
+    </section>
+
+    <section class="grid-dashboard" id="resultados">
+        <div class="painel">
+            <div class="painel-titulo">
+                <div>
+                    <h3>Progresso dos testes</h3>
+                    <p>Percentual de testes aprovados</p>
+                </div>
+                <span class="badge">QA</span>
+            </div>
+
+            <div class="progresso-info">
+                <strong id="porcentagem">0%</strong>
+                <span>Taxa de aprovação</span>
+            </div>
+
+            <div class="barra">
+                <div id="barraProgresso"></div>
+            </div>
+
+            <div class="legenda">
+                <span><i class="bolinha verde-bg"></i>Aprovados</span>
+                <span><i class="bolinha vermelho-bg"></i>Reprovados</span>
+                <span><i class="bolinha cinza-bg"></i>Pendentes</span>
+            </div>
+        </div>
+
+        <div class="painel">
+            <div class="painel-titulo">
+                <div>
+                    <h3>Resultados gerais</h3>
+                    <p>Distribuição dos testes</p>
+                </div>
+            </div>
+            <div class="grafico">
+                <canvas id="graficoTestes"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao" id="projeto">
+        <div class="titulo-secao">
+            <span class="tag">INFORMAÇÕES</span>
+            <h2>Sobre o projeto</h2>
+            <p>Informações gerais do sistema MINERTECH.</p>
+        </div>
+
+        <div class="projeto-grid">
+            <div class="projeto-card">
+                <span>Nome do sistema</span>
+                <strong>MINERTECH</strong>
+            </div>
+            <div class="projeto-card">
+                <span>Área responsável</span>
+                <strong>Recursos Humanos</strong>
+            </div>
+            <div class="projeto-card">
+                <span>Tipo de projeto</span>
+                <strong>Sistema de cadastro</strong>
+            </div>
+        </div>
+
+        <div class="painel objetivo">
+            <h3>Objetivo do sistema</h3>
+            <p>O sistema MINERTECH tem como objetivo realizar o cadastro e gerenciamento de funcionários, armazenando informações importantes e permitindo o acompanhamento dos registros. O Dashboard QA permite acompanhar os testes de qualidade e verificar o funcionamento das funcionalidades do sistema.</p>
+        </div>
+
+        <div class="escopo-grid">
+            <div class="escopo-card">
+                <h3>Dentro do escopo</h3>
+                <ul>
+                    <li>Cadastro de funcionários</li>
+                    <li>Validação de CPF</li>
+                    <li>Validação de campos obrigatórios</li>
+                    <li>Armazenamento dos dados</li>
+                    <li>Visualização dos funcionários</li>
+                </ul>
+            </div>
+
+            <div class="escopo-card fora">
+                <h3>Fora do escopo</h3>
+                <ul>
+                    <li>Integração com bancos externos</li>
+                    <li>Folha de pagamento bancária</li>
+                    <li>Controle de ponto eletrônico</li>
+                    <li>Integração com sistemas externos</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao" id="testes">
+        <div class="titulo-secao">
+            <span class="tag">QUALIDADE DE SOFTWARE</span>
+            <h2>Plano de testes</h2>
+            <p>Altere o resultado de cada teste conforme sua execução.</p>
+        </div>
+
+        <div class="filtros">
+            <input type="text" id="buscarTeste" placeholder="Pesquisar caso de teste...">
+            <select id="filtroStatus">
+                <option value="todos">Todos os resultados</option>
+                <option value="aprovado">Aprovados</option>
+                <option value="reprovado">Reprovados</option>
+                <option value="pendente">Pendentes</option>
+            </select>
+        </div>
+
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Descrição do teste</th>
+                        <th>Resultado esperado</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="listaTestes"></tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="secao" id="funcionarios">
+        <div class="titulo-secao">
+            <span class="tag">RECURSOS HUMANOS</span>
+            <h2>Funcionários cadastrados</h2>
+            <p>Dados importados automaticamente do cadastro MINERTECH.</p>
+        </div>
+
+        <div class="cards-funcionarios">
+            <div class="card">
+                <div class="card-topo">
+                    Total de funcionários
+                    <div class="card-icone azul">♙</div>
+                </div>
+                <h2 id="totalFuncionariosDashboard">0</h2>
+                <small>Registros cadastrados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    Folha salarial
+                    <div class="card-icone verde">R$</div>
+                </div>
+                <h2 id="folhaPagamento">R$ 0,00</h2>
+                <small>Soma dos salários cadastrados</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    Turno da manhã
+                    <div class="card-icone amarelo">☀</div>
+                </div>
+                <h2 id="totalTurnoManha">0</h2>
+                <small>Funcionários</small>
+            </div>
+
+            <div class="card">
+                <div class="card-topo">
+                    Turno da tarde
+                    <div class="card-icone azul">◷</div>
+                </div>
+                <h2 id="totalTurnoTarde">0</h2>
+                <small>Funcionários</small>
+            </div>
+        </div>
+
+        <div class="painel" style="margin-bottom:20px">
+            <div class="painel-titulo">
+                <div>
+                    <h3>Turno da noite</h3>
+                    <p>Total de funcionários cadastrados neste turno</p>
+                </div>
+                <span class="badge" id="totalTurnoNoite">0 funcionários</span>
+            </div>
+        </div>
+
+        <div class="filtros">
+            <input type="text" id="buscarFuncionario" placeholder="Pesquisar funcionário por nome, CPF ou cargo...">
+        </div>
+
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CPF</th>
+                        <th>Cargo</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Turno</th>
+                        <th>Salário</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelaFuncionarios">
+                    <tr><td colspan="7" class="sem-dados">Nenhum funcionário cadastrado.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="secao" id="ambiente">
+        <div class="titulo-secao">
+            <span class="tag">CONFIGURAÇÃO</span>
+            <h2>Ambiente de testes</h2>
+            <p>Ferramentas e tecnologias utilizadas no projeto.</p>
+        </div>
+
+        <div class="ambiente-grid">
+            <div class="ambiente-item">
+                <span>Linguagem de marcação</span>
+                <strong>HTML5</strong>
+            </div>
+            <div class="ambiente-item">
+                <span>Estilização</span>
+                <strong>CSS3</strong>
+            </div>
+            <div class="ambiente-item">
+                <span>Programação</span>
+                <strong>JavaScript</strong>
+            </div>
+            <div class="ambiente-item">
+                <span>Editor de código</span>
+                <strong>Visual Studio Code</strong>
+            </div>
+            <div class="ambiente-item">
+                <span>Execução local</span>
+                <strong>Live Server</strong>
+            </div>
+            <div class="ambiente-item">
+                <span>Armazenamento</span>
+                <strong>LocalStorage</strong>
+            </div>
+        </div>
+    </section>
+
+    <section class="secao" id="conclusao">
+        <div class="titulo-secao">
+            <span class="tag">ENCERRAMENTO</span>
+            <h2>Conclusão</h2>
+        </div>
+
+        <div class="conclusao">
+            <h2>Relatório de qualidade MINERTECH</h2>
+            <p>O Dashboard permite acompanhar a execução dos testes, visualizar os resultados e identificar possíveis falhas no sistema. A integração com o cadastro de funcionários também facilita o acompanhamento dos registros e das informações de Recursos Humanos.</p>
+            <p>Os resultados apresentados dependem da execução real dos testes e dos funcionários cadastrados no sistema.</p>
+        </div>
+    </section>
+
+    <footer class="rodape">
+        MINERTECH • Dashboard de Qualidade de Software • Todos os direitos reservados.
+    </footer>
+
+</main>
+
+<script>
+const chaveFuncionarios = "funcionariosMinertech";
+const chaveResultados = "minertechResultadosQA";
+
+const casosTeste = [
+    {
+        id: "CT-01",
+        descricao: "Cadastrar funcionário com dados válidos",
+        esperado: "Funcionário cadastrado com sucesso"
+    },
+    {
+        id: "CT-02",
+        descricao: "Cadastrar funcionário sem nome",
+        esperado: "O sistema deve impedir o cadastro"
+    },
+    {
+        id: "CT-03",
+        descricao: "Validar CPF inválido",
+        esperado: "O sistema deve apresentar uma mensagem de erro"
+    },
+    {
+        id: "CT-04",
+        descricao: "Cadastrar e-mail em formato inválido",
+        esperado: "O sistema deve rejeitar o e-mail"
+    },
+    {
+        id: "CT-05",
+        descricao: "Cadastrar salário igual a zero",
+        esperado: "O sistema deve impedir o cadastro"
+    },
+    {
+        id: "CT-06",
+        descricao: "Cadastrar salário negativo",
+        esperado: "O sistema deve impedir o cadastro"
+    },
+    {
+        id: "CT-07",
+        descricao: "Verificar armazenamento dos funcionários",
+        esperado: "Os dados devem permanecer salvos"
+    },
+    {
+        id: "CT-08",
+        descricao: "Excluir funcionário cadastrado",
+        esperado: "O registro deve ser removido da lista"
+    }
+];
+
+let resultados = {};
+
+try {
+    resultados = JSON.parse(localStorage.getItem(chaveResultados)) || {};
+} catch {
+    resultados = {};
+}
+
+let grafico = null;
+
+function salvarResultados() {
+    localStorage.setItem(chaveResultados, JSON.stringify(resultados));
+}
+
+function renderizarTestes() {
+    const lista = document.getElementById("listaTestes");
+    const busca = document.getElementById("buscarTeste").value.toLowerCase();
+    const filtro = document.getElementById("filtroStatus").value;
+
+    lista.innerHTML = "";
+
+    const filtrados = casosTeste.filter(teste => {
+        const status = resultados[teste.id] || "pendente";
+        const correspondeBusca =
+            teste.id.toLowerCase().includes(busca) ||
+            teste.descricao.toLowerCase().includes(busca);
+
+        return correspondeBusca && (filtro === "todos" || filtro === status);
+    });
+
+    if (filtrados.length === 0) {
+        lista.innerHTML = '<tr><td colspan="4" class="sem-dados">Nenhum teste encontrado.</td></tr>';
+        return;
+    }
+
+    filtrados.forEach(teste => {
+        const status = resultados[teste.id] || "pendente";
+
+        const linha = document.createElement("tr");
+        linha.innerHTML = `
+            <td><strong>${teste.id}</strong></td>
+            <td>${teste.descricao}</td>
+            <td>${teste.esperado}</td>
+            <td>
+                <select class="status-select" data-id="${teste.id}">
+                    <option value="pendente" ${status === "pendente" ? "selected" : ""}>Pendente</option>
+                    <option value="aprovado" ${status === "aprovado" ? "selected" : ""}>Aprovado</option>
+                    <option value="reprovado" ${status === "reprovado" ? "selected" : ""}>Reprovado</option>
+                </select>
+            </td>
+        `;
+
+        lista.appendChild(linha);
+    });
+
+    document.querySelectorAll(".status-select").forEach(select => {
+        select.addEventListener("change", function() {
+            resultados[this.dataset.id] = this.value;
+            salvarResultados();
+            atualizarDashboard();
+            renderizarTestes();
+        });
+    });
+}
+
+function atualizarDashboard() {
+    const total = casosTeste.length;
+    const aprovados = casosTeste.filter(t => resultados[t.id] === "aprovado").length;
+    const reprovados = casosTeste.filter(t => resultados[t.id] === "reprovado").length;
+    const pendentes = total - aprovados - reprovados;
+    const porcentagem = total ? Math.round((aprovados / total) * 100) : 0;
+
+    document.getElementById("totalTestes").textContent = total;
+    document.getElementById("totalAcertos").textContent = aprovados;
+    document.getElementById("totalErros").textContent = reprovados;
+    document.getElementById("totalPendentes").textContent = pendentes;
+    document.getElementById("porcentagem").textContent = porcentagem + "%";
+    document.getElementById("barraProgresso").style.width = porcentagem + "%";
+
+    atualizarGrafico(aprovados, reprovados, pendentes);
+}
+
+function atualizarGrafico(aprovados, reprovados, pendentes) {
+    const contexto = document.getElementById("graficoTestes");
+
+    if (grafico) {
+        grafico.data.datasets[0].data = [aprovados, reprovados, pendentes];
+        grafico.update();
+        return;
+    }
+
+    grafico = new Chart(contexto, {
+        type: "doughnut",
+        data: {
+            labels: ["Aprovados", "Reprovados", "Pendentes"],
+            datasets: [{
+                data: [aprovados, reprovados, pendentes],
+                backgroundColor: ["#23965b", "#d94b4b", "#c4cbd0"],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: "bottom",
+                    labels: {
+                        boxWidth: 12,
+                        font: { size: 10 }
+                    }
+                }
+            }
+        }
+    });
+}
+
+function lerFuncionarios() {
+    try {
+        const dados = JSON.parse(localStorage.getItem(chaveFuncionarios));
+        return Array.isArray(dados) ? dados : [];
+    } catch {
+        return [];
+    }
+}
+
+function numeroSalario(valor) {
+    if (typeof valor === "number") return valor;
+
+    let texto = String(valor || "").replace(/[R$\s]/g, "");
+
+    if (texto.includes(",")) {
+        texto = texto.replace(/\./g, "").replace(",", ".");
+    }
+
+    const numero = Number(texto);
+    return Number.isFinite(numero) ? numero : 0;
+}
+
+function moeda(valor) {
+    return Number(valor || 0).toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    });
+}
+
+function atualizarFuncionarios() {
+    const funcionarios = lerFuncionarios();
+    const tabela = document.getElementById("tabelaFuncionarios");
+    const busca = document.getElementById("buscarFuncionario").value.toLowerCase();
+
+    const total = funcionarios.length;
+    const folha = funcionarios.reduce((soma, f) => soma + numeroSalario(f.salario), 0);
+
+    const manha = funcionarios.filter(f => String(f.turno || "").toLowerCase().includes("manhã") || String(f.turno || "").toLowerCase().includes("manha")).length;
+    const tarde = funcionarios.filter(f => String(f.turno || "").toLowerCase().includes("tarde")).length;
+    const noite = funcionarios.filter(f => String(f.turno || "").toLowerCase().includes("noite")).length;
+
+    document.getElementById("totalFuncionariosDashboard").textContent = total;
+    document.getElementById("folhaPagamento").textContent = moeda(folha);
+    document.getElementById("totalTurnoManha").textContent = manha;
+    document.getElementById("totalTurnoTarde").textContent = tarde;
+    document.getElementById("totalTurnoNoite").textContent = noite + " funcionários";
+
+    tabela.innerHTML = "";
+
+    const filtrados = funcionarios.filter(f => {
+        const texto = [
+            f.nome, f.cpf, f.cargo, f.email, f.telefone, f.turno
+        ].join(" ").toLowerCase();
+
+        return texto.includes(busca);
+    });
+
+    if (filtrados.length === 0) {
+        tabela.innerHTML = '<tr><td colspan="7" class="sem-dados">Nenhum funcionário encontrado. Cadastre um funcionário no sistema para visualizar aqui.</td></tr>';
+        return;
+    }
+
+    filtrados.forEach(f => {
+        const linha = document.createElement("tr");
+
+        const valores = [
+            f.nome || "-",
+            f.cpf || "-",
+            f.cargo || "-",
+            f.email || "-",
+            f.telefone || "-",
+            f.turno || "-",
+            moeda(numeroSalario(f.salario))
+        ];
+
+        valores.forEach(valor => {
+            const celula = document.createElement("td");
+            celula.textContent = valor;
+            linha.appendChild(celula);
+        });
+
+        tabela.appendChild(linha);
+    });
+}
+
+document.getElementById("buscarTeste").addEventListener("input", renderizarTestes);
+document.getElementById("filtroStatus").addEventListener("change", renderizarTestes);
+document.getElementById("buscarFuncionario").addEventListener("input", atualizarFuncionarios);
+
+window.addEventListener("storage", function(evento) {
+    if (evento.key === chaveFuncionarios) {
+        atualizarFuncionarios();
+    }
+
+    if (evento.key === chaveResultados) {
+        try {
+            resultados = JSON.parse(evento.newValue) || {};
+        } catch {
+            resultados = {};
+        }
+
+        renderizarTestes();
+        atualizarDashboard();
+    }
+});
+
+document.getElementById("dataAtual").textContent =
+    new Date().toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    });
+
+renderizarTestes();
+atualizarDashboard();
+atualizarFuncionarios();
+</script>
+
+</body>
+</html>

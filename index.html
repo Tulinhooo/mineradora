@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINERTECH | Recursos Humanos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="topo">
+        <div class="logo">
+            <div class="icone">⛏</div>
+            <div>
+                <h1>MINERTECH</h1>
+                <span>MINERAÇÃO E TECNOLOGIA</span>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#cadastro">Cadastrar</a>
+            <a href="#funcionarios">Funcionários</a>
+            <a href="#testes">Plano de testes</a>
+        </nav>
+    </header>
+
+    <section class="banner" id="inicio">
+        <div class="banner-conteudo">
+            <span class="etiqueta">SISTEMA DE RECURSOS HUMANOS</span>
+            <h2>Gestão de pessoas,<br><strong>construindo o futuro.</strong></h2>
+            <p>Cadastro e gerenciamento de funcionários da MINERTECH, empresa especializada em mineração e beneficiamento de minérios.</p>
+            <a href="#cadastro" class="botao-banner">Cadastrar funcionário</a>
+        </div>
+    </section>
+
+    <main>
+
+        <section class="informacoes">
+            <div class="info-card">
+                <span>🏭</span>
+                <h3>Área de atuação</h3>
+                <p>Extração mineral e beneficiamento de minérios.</p>
+            </div>
+
+            <div class="info-card">
+                <span>👷</span>
+                <h3>Recursos humanos</h3>
+                <p>Organização e cadastro de colaboradores.</p>
+            </div>
+
+            <div class="info-card">
+                <span>🛡️</span>
+                <h3>Segurança</h3>
+                <p>Validação das informações cadastradas.</p>
+            </div>
+        </section>
+
+        <section class="formulario-area" id="cadastro">
+            <div class="titulo-secao">
+                <span>RECURSOS HUMANOS</span>
+                <h2>Cadastro de Funcionários</h2>
+                <p>Preencha todos os dados para cadastrar um novo colaborador.</p>
+            </div>
+
+            <form id="formFuncionario" novalidate>
+
+                <div class="grupo">
+                    <label for="nome">Nome completo *</label>
+                    <input type="text" id="nome" placeholder="Digite o nome completo" required>
+                </div>
+
+                <div class="grupo">
+                    <label for="endereco">Endereço *</label>
+                    <input type="text" id="endereco" placeholder="Rua, número e cidade" required>
+                </div>
+
+                <div class="linha">
+                    <div class="grupo">
+                        <label for="cpf">CPF *</label>
+                        <input
+                            type="text"
+                            id="cpf"
+                            placeholder="000.000.000-00"
+                            maxlength="14"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            required
+                        >
+                    </div>
+
+                    <div class="grupo">
+                        <label for="nascimento">Data de nascimento *</label>
+                        <input type="date" id="nascimento" required>
+                    </div>
+                </div>
+
+                <div class="grupo">
+                    <label for="entrada">Data de entrada na empresa *</label>
+                    <input type="date" id="entrada" required>
+                </div>
+
+                <div class="linha">
+                    <div class="grupo">
+                        <label for="email">E-mail *</label>
+                        <input type="email" id="email" placeholder="exemplo@email.com" required>
+                    </div>
+
+                    <div class="grupo">
+                        <label for="telefone">Telefone *</label>
+                        <input type="tel" id="telefone" placeholder="(00) 00000-0000" maxlength="15" inputmode="numeric" required>
+                    </div>
+                </div>
+
+                <div class="linha">
+                    <div class="grupo">
+                        <label for="cargo">Cargo *</label>
+                        <select id="cargo" required>
+                            <option value="">Selecione um cargo</option>
+                            <option>Engenheiro de Minas</option>
+                            <option>Geólogo</option>
+                            <option>Operador de Máquinas</option>
+                            <option>Técnico em Segurança do Trabalho</option>
+                            <option>Auxiliar de Mineração</option>
+                            <option>Supervisor de Produção</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo">
+                        <label for="salario">Salário mensal (R$) *</label>
+                        <input type="text" id="salario" placeholder="R$ 0,00" inputmode="decimal" required>
+                    </div>
+                </div>
+
+                <div class="grupo">
+                    <label>Turno de trabalho *</label>
+
+                    <div class="turnos">
+                        <label class="turno">
+                            <input type="radio" name="turno" value="Manhã">
+                            <span>☀️ Manhã</span>
+                        </label>
+
+                        <label class="turno">
+                            <input type="radio" name="turno" value="Tarde">
+                            <span>🌤️ Tarde</span>
+                        </label>
+
+                        <label class="turno">
+                            <input type="radio" name="turno" value="Noite">
+                            <span>🌙 Noite</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="mensagem" role="alert" aria-live="polite"></div>
+
+                <div class="botoes">
+                    <button type="submit" class="salvar">Salvar funcionário</button>
+                    <button type="reset" class="limpar">Limpar formulário</button>
+                </div>
+
+                <p class="aviso">* Todos os campos são obrigatórios.</p>
+
+            </form>
+        </section>
+
+        <section class="funcionarios-area" id="funcionarios">
+            <div class="titulo-secao">
+                <span>GERENCIAMENTO</span>
+                <h2>Funcionários cadastrados</h2>
+                <p>Consulte os colaboradores registrados no sistema.</p>
+            </div>
+
+            <div class="contador">
+                <span>👥</span>
+                <div>
+                    <strong id="totalFuncionarios">0</strong>
+                    <p>Total de funcionários</p>
+                </div>
+            </div>
+
+            <div class="tabela-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Nascimento</th>
+                            <th>Entrada</th>
+                            <th>Cargo</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                            <th>Turno</th>
+                            <th>Salário</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="listaFuncionarios">
+                        <tr>
+                            <td colspan="10">Nenhum funcionário cadastrado.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="testes-area" id="testes">
+            <div class="titulo-secao">
+                <span>QUALIDADE DE SOFTWARE</span>
+                <h2>Plano de Testes QA</h2>
+                <p>Cenários para verificar o funcionamento do sistema.</p>
+            </div>
+
+            <div class="testes-grid">
+                <div class="teste-card">
+                    <strong>CT-01</strong>
+                    <h3>Cadastro com sucesso</h3>
+                    <p>Preencher todos os campos corretamente e salvar.</p>
+                    <span>Esperado: cadastro realizado e formulário limpo.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-02</strong>
+                    <h3>Campo obrigatório vazio</h3>
+                    <p>Deixar o nome em branco e tentar salvar.</p>
+                    <span>Esperado: bloquear cadastro e exibir erro.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-03</strong>
+                    <h3>E-mail inválido</h3>
+                    <p>Digitar um e-mail sem formato válido.</p>
+                    <span>Esperado: exibir erro de e-mail.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-04</strong>
+                    <h3>Seleção de turnos</h3>
+                    <p>Tentar selecionar dois turnos ao mesmo tempo.</p>
+                    <span>Esperado: permitir apenas um turno.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-05</strong>
+                    <h3>Salário inválido</h3>
+                    <p>Informar salário igual ou inferior a zero.</p>
+                    <span>Esperado: bloquear o cadastro.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-06</strong>
+                    <h3>CPF inválido</h3>
+                    <p>Digitar letras ou um CPF com dígitos inválidos.</p>
+                    <span>Esperado: rejeitar o CPF.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-07</strong>
+                    <h3>Data de nascimento</h3>
+                    <p>Informar uma data futura.</p>
+                    <span>Esperado: bloquear a data.</span>
+                </div>
+
+                <div class="teste-card">
+                    <strong>CT-08</strong>
+                    <h3>Data de admissão</h3>
+                    <p>Informar uma data de entrada futura.</p>
+                    <span>Esperado: bloquear a data.</span>
+                </div>
+            </div>
+
+            <div class="ambiente">
+                <h3>Identificação e ambiente de testes</h3>
+                <p><strong>Sistema:</strong> Sistema de Recursos Humanos (SRH)</p>
+                <p><strong>Empresa:</strong> MINERTECH</p>
+                <p><strong>Segmento:</strong> Mineração e beneficiamento de minérios</p>
+                <p><strong>Funcionalidade:</strong> Cadastro de Funcionários</p>
+                <p><strong>Responsáveis:</strong> Equipe de Mineradora</p>
+                <p><strong>Navegadores:</strong> Chrome, Firefox e Edge</p>
+                <p><strong>Dispositivos:</strong> Desktop (1920x1080) e Mobile</p>
+                <p><strong>Status:</strong> A ser testado</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <h2>⛏ MINERTECH</h2>
+        <p>Mineração, tecnologia e desenvolvimento.</p>
+        <p>© 2026 MINERTECH. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
